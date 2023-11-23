@@ -1,0 +1,58 @@
+print("Игра: Крестики нолики")
+print("--------------------------")
+print("Цель игры: выставить в ряд или по диагонали знаки X или O в данном поле три на три для победы")
+print("--------------------------")
+
+
+tabel = [
+        ["-", "-", "-"],
+        ["-", "-", "-"],
+        ["-", "-", "-"]
+]
+def print_doard(board):
+     for row in board:
+         for cell in row:
+             print(cell, end="  ")
+         print()
+
+def check_win(board, player):
+
+    for row in board:
+        if row.count(player) == 3:
+            return True
+
+    for i in range(3):
+        if board[0][i] == player and board[1][i] == player and board[2][2] == player:
+            return True
+
+    if board[0][0] == player and board[1][1] == player and board[2][0] == player:
+        return True
+    if board[0][2] == player and board[1][1] == player and board[2][0] == player:
+        return True
+
+current_player = "X"
+
+while True:
+    print_doard(tabel)
+    print("Ход игрока", current_player)
+    row = int(input("Введите номер строки: ")) - 1
+    col = int(input("Введите номер столбца: ")) - 1
+
+    if tabel[row][col] != "-":
+        print("Ячейка занята")
+        continue
+
+    tabel[row][col] = current_player
+
+    if check_win(tabel, current_player):
+        print_doard(tabel)
+        print(f"Игрок {current_player} победил!!!")
+        break
+
+
+    if all([cell != "_" for row in tabel for cell in row]):
+        print("Ничья")
+        print_doard()
+        break
+
+    current_player = 'O' if current_player == 'X' else "X"
